@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.models.ers_user;
+import com.revature.models.ers_users_roles;
+import com.revature.services.UserRoleServices;
 import com.revature.services.UserServices;
 
 import antlr.collections.List;
@@ -24,25 +26,19 @@ public class AppController {
 	
 	@Autowired 
 	UserServices userService;
-	//UserController userController  = null;
 	
-	AppController()
-	{
-	}
-	
+	@Autowired
+	UserRoleServices userRoleServices;
+
 	@RequestMapping("/")
 	public ModelAndView viewHomePage(HttpSession httpSession )
 	{	
 		ModelAndView modelAndView = null; 
 		String redirectString = "redirect:/main";
+		String userRole = "";
+	
 		@SuppressWarnings("unchecked")
-		ArrayList<String> messages = (ArrayList<String>) httpSession.getAttribute("SPRING_BOOT_SESSION_MESSAGES");
-		/*
-		 TODO(): This is not a good security measure.
-		 IDEAS:
-		 When user login, store a hash something and put it in the database and session array, then in the index logic
-		 get each hash in the database and see if it matches a hash in the session array.
-		*/
+		ArrayList<ers_user> messages = (ArrayList<ers_user>) httpSession.getAttribute("SPRING_BOOT_SESSION_MESSAGES");
 		if (messages == null)
 		{
 			redirectString = "redirect:/login";
@@ -51,8 +47,31 @@ public class AppController {
 		} 
 			
 		modelAndView = new ModelAndView();
-		modelAndView.setViewName("index.jsp");
 		
+		ers_user currentUser = messages.get(0);
+		
+		if (currentUser.getUser_role_id() != 0)
+		{
+			if (userRoleServices != null)
+			{
+				ArrayList<ers_users_roles> userRoleArray = userRoleServices.findUserRoleByUserRoleId(currentUser.getUser_role_id());
+				ers_users_roles userRoles = userRoleArray.get(0);
+				userRole = userRoles.getUser_role();
+			}
+		}
+		
+		if (userRole.equals("Employee"))
+		{
+			modelAndView.setViewName("index.jsp");
+		} else
+		if (userRole.equals("Admin"))
+		{
+			modelAndView.setViewName("admin.jsp");
+		} else {
+			redirectString = "redirect:/login";
+			modelAndView = new ModelAndView(redirectString);
+			
+		}
 		
 		return modelAndView;
 	}
@@ -74,40 +93,6 @@ public class AppController {
 		return modelAndView;
 	}
 	
-	@PostMapping("/dologin")
-	public ModelAndView doLogin(@RequestParam("username") String username, @RequestParam("password") String password,  HttpServletRequest httpServletRequest )
-	{
-		ModelAndView modelAndView = null;
-		String nextPage = null;
-		ers_user result = null;
-		
-		nextPage = "redirect:/login?error=yes";
-		
-		ArrayList<ers_user> usersInDatabase = userService.getUserByUsername(username);
-		
-		for (int usersInDatabaseIndex = 0; usersInDatabaseIndex < usersInDatabase.size();usersInDatabaseIndex++)
-		{
-			result = usersInDatabase.get(usersInDatabaseIndex);
-			
-			if (result.getErs_username().equals(username) && result.getErs_password().equals(password))
-			{
-				@SuppressWarnings("unchecked")
-				ArrayList<ers_user>  session = (ArrayList<ers_user>) httpServletRequest.getSession().getAttribute("SPRING_BOOT_SESSION_MESSAGES");
-				if (session == null)
-				{
-					session = new ArrayList<>();
-					httpServletRequest.getSession().setAttribute("SPRING_BOOT_SESSION_MESSAGES", session);
-					session.add(result);
-					httpServletRequest.getSession().setAttribute("SPRING_BOOT_SESSION_MESSAGES", session);
-				}
-				nextPage = "redirect:/";
-				break;
-			}
-		}
-		
-		modelAndView = new ModelAndView(nextPage);
-		return modelAndView;
-	}
-	
+
 
 }

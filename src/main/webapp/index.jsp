@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,67 @@
 </nav>
 </head>
 <body>
-  <script src="/scripts/login.js"></script>
+
+  <div class="row" style="height: 50px;">
+  </div>
+  <div class="row">
+  	 <div class="col px-sm-1">
+  	 </div>
+ 	 <div class="col px-sm-3">
+ 	 		<div class="row">
+ 	 			   <label for="inputReimbursement" class="col-sm-4 col-form-label"><h3>Reimbursement</h3></label>
+ 	 		</div>
+ 	 		<div class="row" style="height: 3px;">
+ 	 			
+ 	 		</div>
+  	 		<div class="row">
+ 	 			  <label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement amount</label>
+ 	 		</div>
+   	 		<div class="row">
+   	 				<div class="input-group mb-3">
+  						<div class="input-group-prepend">
+    						<span class="input-group-text">$</span>
+  						</div>
+  						<div>
+ 	 						<input type="text" class="form-control" id="rebursementAmount" aria-describedby="basic-addon3">
+  						</div>
+ 	 				</div>	 	
+  			</div>
+    	 	<div class="row">
+ 	 			  <label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement type</label>
+ 	 		</div>
+  			 <div class="row">
+   	 				<div class="input-group mb-5">
+  						<div>
+ 	 						<input type="text" class="form-control" id="rebursementType" aria-describedby="basic-addon3">
+  						</div>
+ 	 				</div>	 	
+  			</div>
+  			 <div class="row">
+ 	 			  <label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement Description</label>
+ 	 		</div>
+  			 <div class="row">
+   	 				<div class="input-group mb-5">
+  						<div>
+  						  <textarea class="form-control" aria-label="With textarea" id="rebursementDescription"></textarea>
+  						</div>
+ 	 				</div>	 	
+  			</div>
+  			 <div class="row">
+   	 				<div class="input-group mb-5">
+  						<div>
+  							<button class="btn btn-primary" type="submit" id="reimburseButton">Reimburse</button>
+  						</div>
+ 	 				</div>	 	
+  			</div>
+  			
+  			
+  		</div>
+  	<div class="col px-sm-8">
+  	</div>
+  </div>
+
+  <script src="/scripts/reimburse.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>

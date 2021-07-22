@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,14 @@
 </nav>
 </head>
 <body>
-<br>
+<div class="row" style="height: 250px;">
+  
+</div>
+<div class="row">
+  	 <div class="col px-sm-4">
+  	 </div>
+ 	 <div class="col px-sm-4">
+ 
 <%
 	String hasErrorMessage = request.getParameter("error");
 	if (hasErrorMessage != null)
@@ -53,27 +61,33 @@
 		if (hasErrorMessage.equals("yes"))
 		{
 %>
-<div class="alert alert-primary" role="alert">
- ${error}
-</div>
+		<div class="alert alert-primary" role="alert">
+ 			${error}
+		</div>
 <% 		}
 	}
 %>
-<form action="dologin" method="post">
-  <div class="row mb-3">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="username" name="username">
-    </div>
-  </div>
-  <div class="row mb-3">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="password" name="password">
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary" id="signInButton">Sign in</button>
-</form>
+		<form action="dologin" method="post">
+  			<div class="row mb-3">
+    			<label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
+    			<div class="col-sm-10">
+      				<input type="text" class="form-control" id="username" name="username">
+    			</div>
+  			</div>
+  			<div class="row mb-3">
+    			<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+    			<div class="col-sm-10">
+      				<input type="password" class="form-control" id="password" name="password">
+    			</div>
+  			</div>
+  			<button type="submit" class="btn btn-primary" id="signInButton">Sign in</button>
+		</form>
+	</div>
+	 <div class="col px-sm-4">
+  	</div>
+</div>
+
+
   <script src="/scripts/login.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
