@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table (name = "ers_users_roles")
 public class ers_users_roles {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long ers_user_role_id;
 	String user_role;
 

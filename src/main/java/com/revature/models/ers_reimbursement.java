@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Table(name = "ers_reimbursement")
 public class ers_reimbursement {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	int reimp_id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int reimb_id;
 	Timestamp reimb_submitted;
 	Timestamp reimb_resolved ;
 	String reimb_description;
@@ -21,13 +21,19 @@ public class ers_reimbursement {
 	byte[] reimb_receipt;
 	int reimb_author;
 	int reimb_resolver;
+	public float getReimb_amount() {
+		return reimb_amount;
+	}
+	public void setReimb_amount(float reimb_amount) {
+		this.reimb_amount = reimb_amount;
+	}
 	int reimb_status_id;
 	int reimb_status_type_id;
 	public int getReimp_id() {
-		return reimp_id;
+		return reimb_id;
 	}
 	public void setReimp_id(int reimp_id) {
-		this.reimp_id = reimp_id;
+		this.reimb_id = reimp_id;
 	}
 	public Timestamp getReimp_submitted() {
 		return reimb_submitted;

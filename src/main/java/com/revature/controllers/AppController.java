@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.models.ers_user;
 import com.revature.models.ers_users_roles;
+import com.revature.services.RembursmentStatusServices;
 import com.revature.services.UserRoleServices;
 import com.revature.services.UserServices;
 
@@ -29,6 +30,7 @@ public class AppController {
 	
 	@Autowired
 	UserRoleServices userRoleServices;
+	
 
 	@RequestMapping("/")
 	public ModelAndView viewHomePage(HttpSession httpSession )
