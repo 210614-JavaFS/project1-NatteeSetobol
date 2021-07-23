@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Driver {
-	private static Logger log = LoggerFactory.getLogger(Driver.class);
+	//private static Logger log = LoggerFactory.getLogger(Driver.class);
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Driver.class, args);
