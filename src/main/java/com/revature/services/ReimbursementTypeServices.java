@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,17 @@ public class ReimbursementTypeServices {
 	
 	public int createReimbursmentType(String type)
 	{
-		int result = -1;
 		ers_reimbursment_type reimbursmentType;
 		
 		reimbursmentType = new ers_reimbursment_type();
 		reimbursmentType.setReimb_type(type);
 		reimbursmentTypeRepo.save(reimbursmentType);
-		return result;
+		return reimbursmentType.getReimb_type_id();
 	}
+	
+	public ArrayList<ers_reimbursment_type> FindAllReimbursmentType(int id)
+	{
+		return reimbursmentTypeRepo.FindAllReimbursmentType(id);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +22,10 @@ public class RembursmentStatusServices {
 		
 		return newStatus.getReimb_status_id();
 	}
+	
+	public ArrayList<ers_reimbursement_status> getAllStatusById(int id)
+	{
+		return reimburseRepo.getAllStatusById(id);
+	}
+	
 }

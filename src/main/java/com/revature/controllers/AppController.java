@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.revature.models.ers_reimbursement;
+import com.revature.models.ers_reimbursement_status;
+import com.revature.models.ers_reimbursment_type;
 import com.revature.models.ers_user;
 import com.revature.models.ers_users_roles;
+import com.revature.repos.reimbursment_dao;
+import com.revature.repos.reimbursment_type_dao;
+import com.revature.services.ReimbursementService;
+import com.revature.services.ReimbursementTypeServices;
 import com.revature.services.RembursmentStatusServices;
 import com.revature.services.UserRoleServices;
 import com.revature.services.UserServices;
@@ -31,13 +39,23 @@ public class AppController {
 	@Autowired
 	UserRoleServices userRoleServices;
 	
-
+	@Autowired
+	ReimbursementService reimbursementService;
+	
+	@Autowired
+	RembursmentStatusServices reimbursementStatusService;
+	
+	@Autowired
+	ReimbursementTypeServices reimbursementTypeService;
+	
+	
 	@RequestMapping("/")
 	public ModelAndView viewHomePage(HttpSession httpSession )
 	{	
 		ModelAndView modelAndView = null; 
 		String redirectString = "redirect:/main";
 		String userRole = "";
+		ArrayList<HashMap<String, String>> Items = new ArrayList<>();
 	
 		@SuppressWarnings("unchecked")
 		ArrayList<ers_user> messages = (ArrayList<ers_user>) httpSession.getAttribute("SPRING_BOOT_SESSION_MESSAGES");
@@ -64,7 +82,38 @@ public class AppController {
 		
 		if (userRole.equals("Employee"))
 		{
+			
+			ArrayList<ers_reimbursement> reimbursementTickets = reimbursementService.getAllTicketsByUserId( (int) currentUser.getErs_id());
+			
+			for (int ticketIndex = 0; ticketIndex < reimbursementTickets.size(); ticketIndex++)
+				
+			{
+				ers_reimbursement ticket = reimbursementTickets.get(0);
+				ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_type_id());
+				ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
+				
+				if (ticketStatus.getReimb_status().equals("unapproved"))
+				{
+					HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
+					
+					
+					ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
+					ers_reimbursment_type type = typeArray.get(0);
+					
+					reimbruseTicket.put("type",type.getReimb_type());
+					reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
+					reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
+					
+					Items.add(reimbruseTicket);
+				}
+				
+				
+			}
+		
+			modelAndView.addObject("items",Items);
+			
 			modelAndView.setViewName("index.jsp");
+		
 		} else
 		if (userRole.equals("Admin"))
 		{
@@ -94,7 +143,4 @@ public class AppController {
 		
 		return modelAndView;
 	}
-	
-
-
 }

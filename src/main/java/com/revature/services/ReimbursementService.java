@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,11 @@ public class ReimbursementService {
 		reimbursementDao.save(reimbursement);
 		
 		return  reimbursement.getReimp_id();
+	}
+	
+	
+	public ArrayList<ers_reimbursement> getAllTicketsByUserId(int userId)
+	{
+		 return reimbursementDao.getAllTicketsByUserId(userId);
 	}
 }
