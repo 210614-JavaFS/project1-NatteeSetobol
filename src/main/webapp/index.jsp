@@ -49,116 +49,166 @@
 
   <div class="row" style="height: 50px;">
   </div>
-  <div class="row">
-  	 <div class="col px-sm-1">
-  	 </div>
- 	 <div class="col px-sm-2">
- 	 	<div class="row">
- 	 		<label for="inputReimbursement" class="col-sm-4 col-form-label"><h3>Reimbursement</h3></label>
- 	 	</div>
- 	 	<div class="row" style="height: 3px;">		
- 	 	</div>
-  	 	<div class="row">
- 	 		<label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement amount</label>
- 	 	</div>
-   	 	<div class="row">
-   	 		<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-    				<span class="input-group-text">$</span>
-  					</div>
-  				<div>
- 	 				<input type="text" class="form-control" id="rebursementAmount" aria-describedby="basic-addon3">
-  				</div>
- 	 		</div>	 	
-  		</div>
-    	 <div class="row">
- 	 		<label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement type</label>
- 	 	</div>
-  		<div class="row">
-   	 		<div class="input-group mb-5">
-  				<div>
- 	 				<input type="text" class="form-control" id="rebursementType" aria-describedby="basic-addon3">
-  				</div>
- 	 			</div>	 	
-  			</div>
-  			<div class="row">
- 	 			<label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement Description</label>
- 	 		</div>
-  			<div class="row">
-   	 			<div class="input-group mb-5">
-  					<div>
-  						<textarea class="form-control" aria-label="With textarea" id="rebursementDescription"></textarea>
-  					</div>
- 	 			</div>	 	
-  			</div>
-  			 <div class="row">
-   	 			<div class="input-group mb-5">
-  					<div>
-  						<button class="btn btn-primary" type="submit" id="reimburseButton">Reimbursed</button>
-  					</div>
- 	 			</div>	 	
-  			</div>
-  		</div>
-  		<div class="col px-sm-8">
+	<div class="row">
+		<div class="col px-sm-1"></div>
+		<div class="col px-sm-2">
+			<div class="row">
+				<label for="inputReimbursement" class="col-sm-4 col-form-label"><h3>Reimbursement</h3></label>
+			</div>
+			<div class="row" style="height: 3px;"></div>
+			<div class="row">
+				<label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement
+					amount</label>
+			</div>
+			<div class="row">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">$</span>
+					</div>
+					<div>
+						<input type="text" class="form-control" id="rebursementAmount"
+							aria-describedby="basic-addon3">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement
+					type</label>
+			</div>
+			<div class="row">
+				<div class="input-group mb-5">
+					<div>
+						<input type="text" class="form-control" id="rebursementType"
+							aria-describedby="basic-addon3">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label for="reimbursementAmount" class="col-sm-8 col-form-label">Reimbursement
+					Description</label>
+			</div>
+			<div class="row">
+				<div class="input-group mb-5">
+					<div>
+						<textarea class="form-control" aria-label="With textarea"
+							id="rebursementDescription"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-group mb-5">
+					<div>
+						<button class="btn btn-primary" type="submit" id="reimburseButton">Reimbursed</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col px-sm-8">
 			<div class="accordion accordion-flush" id="accordionFlushExample">
-  				<div class="accordion-item">
-    				<h2 class="accordion-header" id="flush-headingOne">
-      				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        				Pending Tickets
-      				</button>
-    				</h2>
-    				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-      				<div class="accordion-body">
-      					<table style="width:100%">
-      						<thead>
-      							<tr>
-      								<th>Type</th>
-      								<th>Amount</th>
-      								<th>Date</th>
-      							</tr>
-      							
-      						</thead>
-      						<tbody>
-      				   			<c:forEach items="${items}" var="item">
-      				   				<tr>
-      				   					<td>${item.get("type")}</td>
-      				   					<td>${item.get("amount")}</td>
-      				   					<td>${item.get("date")}</td>
-      				   				</tr>
-      				   			</c:forEach>
-      				   		</tbody>
-      				   </table>
-      				</div>
-    				</div>
-  				</div>
-  				<div class="accordion-item">
-    				<h2 class="accordion-header" id="flush-headingTwo">
-      					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        					Approved Tickets
-      					</button>
-    				</h2>
-    				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-      					<div class="accordion-body">
-      						Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.
-      					</div>
-    					</div>
-  					</div>
-  				</div>
-    			<div class="accordion-item">
-    				<h2 class="accordion-header" id="flush-headingThree">
-      					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-        					Denied Tickets
-      					</button>
-    				</h2>
-    				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-      					<div class="accordion-body">
-      						Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.
-      						</div>
-    					</div>
-  					</div>
-  			    </div>
-  		  </div>
-  <script src="/scripts/reimburse.js"></script>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingOne">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+							aria-expanded="false" aria-controls="flush-collapseOne">
+							Pending Tickets</button>
+					</h2>
+					<div id="flush-collapseOne" class="accordion-collapse collapse"
+						aria-labelledby="flush-headingOne"
+						data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body">
+							<table style="width: 100%">
+								<thead>
+									<tr>
+										<th>Type</th>
+										<th>Amount</th>
+										<th>Date</th>
+									</tr>
+
+								</thead>
+								<tbody>
+									<c:forEach items="${pendingTickets}" var="pendingTicket">
+										<tr>
+											<td>${pendingTicket.get("type")}</td>
+											<td>${pendingTicket.get("amount")}</td>
+											<td>${pendingTicket.get("date")}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingTwo">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+							aria-expanded="false" aria-controls="flush-collapseTwo">
+							Approved Tickets</button>
+					</h2>
+					<div id="flush-collapseTwo" class="accordion-collapse collapse"
+						aria-labelledby="flush-headingTwo"
+						data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body">
+							<table style="width: 100%">
+								<thead>
+									<tr>
+										<th>Type</th>
+										<th>Amount</th>
+										<th>Date</th>
+									</tr>
+
+								</thead>
+								<tbody>
+									<c:forEach items="${approvedTickets}" var="approvedTicket">
+										<tr>
+											<td>${approvedTicket.get("type")}</td>
+											<td>${approvedTicket.get("amount")}</td>
+											<td>${approvedTicket.get("date")}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="flush-headingThree">
+					<button class="accordion-button collapsed" type="button"
+						data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+						aria-expanded="false" aria-controls="flush-collapseThree">
+						Denied Tickets</button>
+				</h2>
+				<div id="flush-collapseThree" class="accordion-collapse collapse"
+					aria-labelledby="flush-headingThree"
+					data-bs-parent="#accordionFlushExample">
+					<div class="accordion-body">
+						<table style="width: 100%">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Amount</th>
+									<th>Date</th>
+								</tr>
+
+							</thead>
+							<tbody>
+								<c:forEach items="${disapprovedTickets}" var="disapprovedTicket">
+									<tr>
+										<td>${disapprovedTicket.get("type")}</td>
+										<td>${disapprovedTicket.get("amount")}</td>
+										<td>${disapprovedTicket.get("date")}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	<script src="/scripts/reimburse.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>

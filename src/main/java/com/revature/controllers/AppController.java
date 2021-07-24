@@ -55,7 +55,9 @@ public class AppController {
 		ModelAndView modelAndView = null; 
 		String redirectString = "redirect:/main";
 		String userRole = "";
-		ArrayList<HashMap<String, String>> Items = new ArrayList<>();
+		ArrayList<HashMap<String, String>> pendingTickets = new ArrayList<>();
+		ArrayList<HashMap<String, String>> approvedTickets = new ArrayList<>();
+		ArrayList<HashMap<String, String>> disapprovedTickets = new ArrayList<>();
 	
 		@SuppressWarnings("unchecked")
 		ArrayList<ers_user> messages = (ArrayList<ers_user>) httpSession.getAttribute("SPRING_BOOT_SESSION_MESSAGES");
@@ -82,18 +84,17 @@ public class AppController {
 		
 		if (userRole.equals("Employee"))
 		{
-			
+			// TODO(): Make this more dynamic by using REST API
 			ArrayList<ers_reimbursement> reimbursementTickets = reimbursementService.getAllTicketsByUserId( (int) currentUser.getErs_id());
 			
 			for (int ticketIndex = 0; ticketIndex < reimbursementTickets.size(); ticketIndex++)
 				
 			{
-				ers_reimbursement ticket = reimbursementTickets.get(0);
+				ers_reimbursement ticket = reimbursementTickets.get(ticketIndex);
 				ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_type_id());
 				ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
 				
-				if (ticketStatus.getReimb_status().equals("unapproved"))
-				{
+
 					HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
 					
 					
@@ -104,13 +105,23 @@ public class AppController {
 					reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
 					reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
 					
-					Items.add(reimbruseTicket);
+				if (ticketStatus.getReimb_status().equals("unapproved"))
+				{
+					pendingTickets.add(reimbruseTicket);
+				} else 
+				if (ticketStatus.getReimb_status().equals("approved"))
+				{
+					approvedTickets.add(reimbruseTicket);
+				} else 
+				if (ticketStatus.getReimb_status().equals("denied"))
+				{
+					disapprovedTickets.add(reimbruseTicket);
 				}
-				
-				
 			}
 		
-			modelAndView.addObject("items",Items);
+			modelAndView.addObject("pendingTickets",pendingTickets);
+			modelAndView.addObject("approvedTickets",approvedTickets);
+			modelAndView.addObject("disapprovedTickets",disapprovedTickets);
 			
 			modelAndView.setViewName("index.jsp");
 		
