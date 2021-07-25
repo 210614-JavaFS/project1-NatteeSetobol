@@ -38,4 +38,9 @@ public class ReimbursementService {
 	{
 		 return reimbursementDao.getAllTicketsByUserId(userId);
 	}
+	
+	public ArrayList<ers_reimbursement> getAllTicketsByStatus()
+	{
+		return reimbursementDao.getAllTicketsByStatus();
+	}
 }

@@ -23,6 +23,11 @@ public class UserServices {
 		result = userDao.findByUsername(username);
 		return result;
 	}
+	  public ArrayList<ers_user> findByUserId(long userId)
+	  {
+		  return userDao.findByUserId(userId);
+	  }
+	
 	/*
 	public String getUserRoleByUserId(long id)
 	{

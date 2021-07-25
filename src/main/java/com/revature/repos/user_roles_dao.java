@@ -12,5 +12,6 @@ import com.revature.models.ers_users_roles;
 public interface user_roles_dao extends  CrudRepository<ers_users_roles, Long> {
 	@Query("from ers_users_roles where ers_user_role_id = ?1")
 	public ArrayList<ers_users_roles> findUserRoleByUserRoleId(long l);
+	
 }
 

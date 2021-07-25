@@ -95,15 +95,14 @@ public class AppController {
 				ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
 				
 
-					HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
+				HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
 					
+				ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
+				ers_reimbursment_type type = typeArray.get(0);
 					
-					ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
-					ers_reimbursment_type type = typeArray.get(0);
-					
-					reimbruseTicket.put("type",type.getReimb_type());
-					reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
-					reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
+				reimbruseTicket.put("type",type.getReimb_type());
+				reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
+				reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
 					
 				if (ticketStatus.getReimb_status().equals("unapproved"))
 				{
