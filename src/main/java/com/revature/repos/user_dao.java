@@ -15,4 +15,5 @@ public interface user_dao extends CrudRepository<ers_user, Long> {
     public ArrayList<ers_user> findByUsername(String username);
     @Query("from ers_user where id= ?1")
     public ArrayList<ers_user> findByUserId(long userId);
+
 }

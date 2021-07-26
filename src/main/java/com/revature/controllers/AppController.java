@@ -98,23 +98,26 @@ public class AppController {
 				HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
 					
 				ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
-				ers_reimbursment_type type = typeArray.get(0);
+				if (typeArray.size() > 0)
+				{
+					ers_reimbursment_type type = typeArray.get(0);
 					
-				reimbruseTicket.put("type",type.getReimb_type());
-				reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
-				reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
+					reimbruseTicket.put("type",type.getReimb_type());
+					reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
+					reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
 					
-				if (ticketStatus.getReimb_status().equals("unapproved"))
-				{
-					pendingTickets.add(reimbruseTicket);
-				} else 
-				if (ticketStatus.getReimb_status().equals("approved"))
-				{
-					approvedTickets.add(reimbruseTicket);
-				} else 
-				if (ticketStatus.getReimb_status().equals("denied"))
-				{
-					disapprovedTickets.add(reimbruseTicket);
+					if (ticketStatus.getReimb_status().equals("unapproved"))
+					{
+						pendingTickets.add(reimbruseTicket);
+					} else 
+					if (ticketStatus.getReimb_status().equals("approved"))
+					{
+						approvedTickets.add(reimbruseTicket);
+					} else 
+					if (ticketStatus.getReimb_status().equals("denied"))
+					{
+						disapprovedTickets.add(reimbruseTicket);
+					}
 				}
 			}
 		
@@ -125,9 +128,9 @@ public class AppController {
 			modelAndView.setViewName("index.jsp");
 		
 		} else
-		if (userRole.equals("Admin"))
+		if (userRole.equals("Manager"))
 		{
-			modelAndView.setViewName("admin.jsp");
+			modelAndView.setViewName("Manager.jsp");
 		} else {
 			redirectString = "redirect:/login";
 			modelAndView = new ModelAndView(redirectString);

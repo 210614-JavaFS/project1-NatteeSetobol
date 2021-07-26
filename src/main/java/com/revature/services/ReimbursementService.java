@@ -43,4 +43,10 @@ public class ReimbursementService {
 	{
 		return reimbursementDao.getAllTicketsByStatus();
 	}
+	
+    public void updateTicketStatus(int ticketId, int author, Timestamp submitted, int newStatus)
+    {
+    	reimbursementDao.updateTicketStatus(ticketId, author, submitted, newStatus);
+    }
+
 }

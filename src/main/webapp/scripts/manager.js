@@ -6,10 +6,36 @@ let approveTicketTable = document.getElementById('approveTickets');
 
 function Approve(id)
 {
-	alert(id);
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST",'/approveTicket', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function() { 
+    	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+			DeleteRows();
+			PopulateTicketTable();
+    	}
+	}
+	let data = "ticketId=" + id;
+	xhr.send(data);
 }
 
-function AddToTicketTable(id,author, amount, description, timesubmitted,authorId)
+function Disapprove(id)
+{
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST",'/disapproveTicket', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function() { 
+    	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+			DeleteRows();
+			PopulateTicketTable();
+    	}
+	}
+	let data = "ticketId=" + id;
+	xhr.send(data);
+}
+
+
+function AddToTicketTable(id,author, amount, description, timesubmitted,ticketNumber)
 {		
 	let approveTicketTableRowCount = approveTicketTable.rows.length;
 
@@ -31,7 +57,7 @@ function AddToTicketTable(id,author, amount, description, timesubmitted,authorId
 	nameColumn5.innerHTML = timesubmitted;
 
 	let nameColumn6  =  approveTicketRow.insertCell(5);
-	nameColumn6.innerHTML = '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action</button><ul class="dropdown-menu"aria-labelledby="dropdownMenuButton1"><li><a class="dropdown-item" href="#" onClick="Approve(' + authorId + ');">Approve</a></li><li><a class="dropdown-item" href="#">Deny</a></li></ul></div>';
+	nameColumn6.innerHTML = '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Action</button><ul class="dropdown-menu"aria-labelledby="dropdownMenuButton1"><li><a class="dropdown-item" href="#" onClick="Approve(' + ticketNumber + ');">Approve</a></li><li><a class="dropdown-item" href="#" onClick="Disapprove(' + ticketNumber + ');"">Deny</a></li></ul></div>';
 
 }
 
@@ -53,7 +79,7 @@ xhr.open("GET", "/api/GetAllUnapproveTickets", true);
 			} else {
 				for (ticketIndex = 0; ticketIndex < data.length; ticketIndex++)
 				{
-					AddToTicketTable(ticketIndex+1,data[ticketIndex].author, data[ticketIndex].amount,data[ticketIndex].descrip , data[ticketIndex].date, data[ticketIndex].authorId);
+					AddToTicketTable(ticketIndex+1,data[ticketIndex].author, data[ticketIndex].amount,data[ticketIndex].descrip , data[ticketIndex].date, data[ticketIndex].number);
 				}
 			}
 		}
@@ -61,4 +87,11 @@ xhr.open("GET", "/api/GetAllUnapproveTickets", true);
 }
 xhr.send();
 
+}
+
+function DeleteRows() {
+	var rowCount = approveTicketTable.rows.length;
+ 	for (var i = rowCount - 1; i > 0; i--) {
+    	approveTicketTable.deleteRow(i);
+    }
 }

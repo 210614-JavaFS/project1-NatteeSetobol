@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -41,9 +44,88 @@ public class ManagerContoller {
 	ReimbursementTypeServices reimbursementTypeService;
 	
 	
+	@PostMapping("/approveTicket")
+	@ResponseBody
+	public String approveTicket(@RequestParam("ticketId") int ticketId,HttpServletRequest httpServletRequest)
+	{
+		String userRole = "";
+		String result = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<ers_user>  session = (ArrayList<ers_user>) httpServletRequest.getSession().getAttribute("SPRING_BOOT_SESSION_MESSAGES");
+		if (session == null)
+		{
+			HashMap<String, String> errorMessage = new HashMap<>();
+			errorMessage.put("error", "invalid Session");
+			try {
+				result = objectMapper.writeValueAsString(errorMessage);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			
+			ers_user currentUser = session.get(0);
+			if (currentUser.getUser_role_id() != 0)
+			{
+				ArrayList<ers_users_roles> userRoleArray = userRoleServices.findUserRoleByUserRoleId(currentUser.getUser_role_id());
+				ers_users_roles userRoles = userRoleArray.get(0);
+				userRole = userRoles.getUser_role();
+				
+				if (userRole.equals("Manager"))
+				{
+					Timestamp today = new Timestamp(System.currentTimeMillis());
+					reimbursementService.updateTicketStatus(ticketId, (int) currentUser.getErs_id(), today, 5);
+				}
+			}
+		}
+		return result;
+	}
+	
+	@PostMapping("/disapproveTicket")
+	@ResponseBody
+	public String disapproveTicket(@RequestParam("ticketId") int ticketId,HttpServletRequest httpServletRequest)
+	{
+		String userRole = "";
+		String result = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<ers_user>  session = (ArrayList<ers_user>) httpServletRequest.getSession().getAttribute("SPRING_BOOT_SESSION_MESSAGES");
+		if (session == null)
+		{
+			HashMap<String, String> errorMessage = new HashMap<>();
+			errorMessage.put("error", "invalid Session");
+			try {
+				
+				result = objectMapper.writeValueAsString(errorMessage);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			
+			ers_user currentUser = session.get(0);
+			if (currentUser.getUser_role_id() != 0)
+			{
+				ArrayList<ers_users_roles> userRoleArray = userRoleServices.findUserRoleByUserRoleId(currentUser.getUser_role_id());
+				ers_users_roles userRoles = userRoleArray.get(0);
+				userRole = userRoles.getUser_role();
+				
+				if (userRole.equals("Manager"))
+				{
+					Timestamp today = new Timestamp(System.currentTimeMillis());
+					reimbursementService.updateTicketStatus(ticketId, (int) currentUser.getErs_id(), today, 7);
+				}
+			}
+		}
+		return result;
+	}
+	
 	@GetMapping("/api/GetAllUnapproveTickets")
 	@ResponseBody
-	public String getAllUnapprovedTickets(HttpServletRequest httpServletRequest) throws JsonProcessingException
+	public String getAllUnapprovedTickets( HttpServletRequest httpServletRequest) throws JsonProcessingException
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
 		String result = null;
@@ -52,7 +134,7 @@ public class ManagerContoller {
 		@SuppressWarnings("unchecked")
 		ArrayList<ers_user>  session = (ArrayList<ers_user>) httpServletRequest.getSession().getAttribute("SPRING_BOOT_SESSION_MESSAGES");
 		ArrayList<HashMap<String, String>> pendingTickets = new ArrayList<>();
-		/*
+		
 		if (session == null)
 		{
 			HashMap<String, String> errorMessage = new HashMap<>();
@@ -69,9 +151,9 @@ public class ManagerContoller {
 				ers_users_roles userRoles = userRoleArray.get(0);
 				userRole = userRoles.getUser_role();
 				
-				if (userRole.equals("Admin"))
+				if (userRole.equals("Manager"))
 				{
-			*/
+			
 					ArrayList<ers_reimbursement> reimbursementTickets = reimbursementService.getAllTicketsByStatus();
 		
 					for (int ticketIndex = 0; ticketIndex < reimbursementTickets.size(); ticketIndex++)
@@ -102,13 +184,11 @@ public class ManagerContoller {
 					
 					result = objectMapper.writeValueAsString(pendingTickets);
 				
-		/*
+		
 				}
 				
 			}
 		}
-		*/
-		
 		
 		return result;
 	}
