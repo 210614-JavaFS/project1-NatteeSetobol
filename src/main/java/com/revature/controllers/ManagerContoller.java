@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -190,6 +191,93 @@ public class ManagerContoller {
 			}
 		}
 		
+		return result;
+	}
+	
+	@GetMapping("/api/GetAllTickets")
+	@ResponseBody
+	public String getAllTickets( HttpServletRequest httpServletRequest) throws JsonProcessingException
+	{
+		String result = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+		String userRole = "";
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<ers_user>  session = (ArrayList<ers_user>) httpServletRequest.getSession().getAttribute("SPRING_BOOT_SESSION_MESSAGES");
+		ArrayList<HashMap<String, String>> pendingTickets = new ArrayList<>();
+		
+		if (session == null)
+		{
+			HashMap<String, String> errorMessage = new HashMap<>();
+			errorMessage.put("error", "invalid Session");
+			result = objectMapper.writeValueAsString(errorMessage);
+		} else {
+			
+			ers_user currentUser = session.get(0);
+			
+			if (currentUser.getUser_role_id() != 0)
+			{
+				ArrayList<ers_users_roles> userRoleArray = userRoleServices.findUserRoleByUserRoleId(currentUser.getUser_role_id());
+				ers_users_roles userRoles = userRoleArray.get(0);
+				userRole = userRoles.getUser_role();
+				
+				if (userRole.equals("Manager"))
+				{
+					ArrayList<ers_reimbursement> reimbursementTickets = reimbursementService.getAllTicketsByStatus();
+		
+					for (int ticketIndex = 0; ticketIndex < reimbursementTickets.size(); ticketIndex++)
+					{
+						ArrayList<ers_user> resolverInfo  = null;
+						String resolverName = "";
+						String timeResolved = "";
+						ers_reimbursement ticket = reimbursementTickets.get(ticketIndex);
+						ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_type_id());
+						ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
+			
+						//ticketStatus.getReimb_status().equals("unapproved"))
+						
+							HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
+				
+							ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
+							ers_reimbursment_type type = typeArray.get(0);
+						
+							ArrayList<ers_user> userInfo =  userService.findByUserId((long)ticket.getReimb_author());
+							ers_user ticketAuthor = userInfo.get(0);
+							
+							if (ticket.getReimb_resolver() != 0)
+							{
+								resolverInfo =  userService.findByUserId((long)ticket.getReimb_resolver());
+								ers_user resolverObject = resolverInfo.get(0);
+								resolverName  = resolverObject.getErs_username();
+							}
+							
+							try
+							{
+								timeResolved = ticket.getReimp_resolved().toString();
+							} catch(Exception e)
+							{
+							}
+							if (ticketStatus.getReimb_status().equals("unapproved") == false)
+							{
+								reimbruseTicket.put("authorId",String.valueOf(ticket.getReimb_author()));
+								reimbruseTicket.put("author", ticketAuthor.getErs_username());
+								reimbruseTicket.put("descrip", ticket.getReimp_description());
+								reimbruseTicket.put("date",ticket.getReimp_submitted().toString());
+								reimbruseTicket.put("number",String.valueOf(ticket.getReimp_id()));
+								reimbruseTicket.put("amount",String.valueOf(ticket.getReimb_amount()));
+								reimbruseTicket.put("ticketStatus", ticketStatus.getReimb_status());
+								reimbruseTicket.put("ticketTimeResolve", timeResolved);
+								reimbruseTicket.put("resolver",resolverName );
+								pendingTickets.add(reimbruseTicket);
+							}
+						
+					}
+					
+					result = objectMapper.writeValueAsString(pendingTickets);			
+				}
+			}
+		}
+
 		return result;
 	}
 }

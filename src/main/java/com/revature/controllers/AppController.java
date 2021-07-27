@@ -143,7 +143,7 @@ public class AppController {
 	@RequestMapping("/login")
 	public ModelAndView login(@RequestParam(required = false) String error,HttpSession httpSession )
 	{
-		
+		httpSession.invalidate();
 		ModelAndView modelAndView = new ModelAndView();
 		if (error != null)
 		{

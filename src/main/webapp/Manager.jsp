@@ -48,7 +48,7 @@
 	</div>
 </nav>
 </head>
-<body onload="PopulateTicketTable();">
+<body onload="PopulateTables();">
 	<div class="row">
 
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -95,7 +95,24 @@
 			</div>
 			<div class="tab-pane fade" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
-				two
+				<table class="table" id="ticketsHistory">
+					<thead>
+						<tr>
+							<th scope="col">Ticket #</th>
+							<th scope="col">Author</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Description</th>
+							<th scope="col">Status</th>
+							<th scope="col">Time Submitted</th>
+							<th scope="col">Resolver</th>
+							<th scope="col">Time Resolved</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<div class="tab-pane fade" id="contact" role="tabpanel"
 				aria-labelledby="contact-tab">
