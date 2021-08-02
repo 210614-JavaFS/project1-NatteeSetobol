@@ -39,7 +39,6 @@
    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
-    <span><img id="logo" alt="Logo" src="images/ticket.png" width="120" height="80"> <a class="navbar-brand" href="#">Tick-it</a></span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -83,7 +82,7 @@
   	 </div>
  	 <div class="col px-sm-4">
  	 
- 	 <a class="navbar-brand" href="#"> <img id="logo" alt="Logo" src="images/ticket.png" width="120" height="80"> <span><font>Tick-It</font><b><i>Ticket reimbursement system</i></b></span> </a>
+ 	<span><font>Tick-It</font><b><i>Ticket reimbursement system</i></b></span> </a>
  	<br>
  	<br>
 <%

@@ -8,12 +8,13 @@ let approveTicketHistoryTable = document.getElementById('ticketsHistory');
 function Approve(id)
 {
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST",'/approveTicket', true);
+	xhr.open("POST",'/approveticket', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function() { 
     	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 			DeleteRows();
 			PopulateTicketTable();
+			PopulateTicketHistoryTable();
     	}
 	}
 	let data = "ticketId=" + id;
@@ -23,12 +24,13 @@ function Approve(id)
 function Disapprove(id)
 {
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST",'/disapproveTicket', true);
+	xhr.open("POST",'/disapproveticket', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function() { 
     	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 			DeleteRows();
 			PopulateTicketTable();
+			 PopulateTicketHistoryTable();
     	}
 	}
 	let data = "ticketId=" + id;
@@ -114,7 +116,7 @@ function PopulateTicketTable()
 					for (ticketIndex = 0; ticketIndex < data.length; ticketIndex++)
 					{
 						
-						AddToTicketTable(ticketIndex+1,data[ticketIndex].author, data[ticketIndex].amount,data[ticketIndex].descrip , data[ticketIndex].date);
+						AddToTicketTable(ticketIndex+1,data[ticketIndex].author, data[ticketIndex].amount,data[ticketIndex].descrip , data[ticketIndex].date,data[ticketIndex].number);
 						
 					}
 				}
@@ -143,6 +145,7 @@ function PopulateTicketHistoryTable()
 				{
 					alert(data.error);
 				} else {
+					DeleteHistoryRows();
 					console.log(data);
 					for (ticketIndex = 0; ticketIndex < data.length; ticketIndex++)
 					{
@@ -162,6 +165,13 @@ function DeleteRows() {
 	var rowCount = approveTicketTable.rows.length;
  	for (var i = rowCount - 1; i > 0; i--) {
     	approveTicketTable.deleteRow(i);
+    }
+}
+
+function DeleteHistoryRows() {
+	var rowCount = approveTicketHistoryTable.rows.length;
+ 	for (var i = rowCount - 1; i > 0; i--) {
+    	approveTicketHistoryTable.deleteRow(i);
     }
 }
 

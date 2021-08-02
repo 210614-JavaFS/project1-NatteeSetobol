@@ -64,8 +64,8 @@ public class UserController {
 				// TODO(): I should prob change the user id to a int instead of a long
 				ers_user currentUser = session.get(0);
 				reimbursementTypeId= reimbursementTypeService.createReimbursmentType(rebursementType);
-				reimburseMentStatusId = rembursementStatusService.createRebursementStatus("unapproved");
-				reimbursementId =  reimbursementService.CreateReimbursement(rebursementDescription, rebursementAmount, reimbursementTypeId,reimburseMentStatusId , (int) currentUser.getErs_id());
+				//reimburseMentStatusId = rembursementStatusService.createRebursementStatus("unapproved");
+				reimbursementId =  reimbursementService.CreateReimbursement(rebursementDescription, rebursementAmount,1, reimbursementTypeId , (int) currentUser.getErs_id());
 				result = "{ Error: 'none'}";
 			}
 			

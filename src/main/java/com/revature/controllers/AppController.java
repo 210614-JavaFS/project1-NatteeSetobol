@@ -104,13 +104,13 @@ public class AppController {
 				
 			{
 				ers_reimbursement ticket = reimbursementTickets.get(ticketIndex);
-				ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_type_id());
+				ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_id());
 				ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
 				
 
 				HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
 					
-				ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
+				ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_type_id());
 				if (typeArray.size() > 0)
 				{
 					ers_reimbursment_type type = typeArray.get(0);

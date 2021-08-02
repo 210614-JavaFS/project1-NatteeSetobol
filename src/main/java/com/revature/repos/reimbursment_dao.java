@@ -22,6 +22,6 @@ public interface reimbursment_dao extends CrudRepository<ers_reimbursement, Long
 	
     @Transactional
     @Modifying
-    @Query("UPDATE ers_reimbursement set reimb_resolver = ?2,reimb_resolved = ?3, reimb_status_type_id = ?4  where reimb_id = ?1")
+    @Query("UPDATE ers_reimbursement set reimb_resolver = ?2,reimb_resolved = ?3, reimb_status_id = ?4  where reimb_id = ?1")
     public void updateTicketStatus(int ticketId, int author, Timestamp submitted, int newStatus);
 }

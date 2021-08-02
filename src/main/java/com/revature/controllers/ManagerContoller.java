@@ -45,7 +45,7 @@ public class ManagerContoller {
 	ReimbursementTypeServices reimbursementTypeService;
 	
 	
-	@PostMapping("/approveTicket")
+	@PostMapping("/approveticket")
 	@ResponseBody
 	public String approveTicket(@RequestParam("ticketId") int ticketId,HttpServletRequest httpServletRequest)
 	{
@@ -77,14 +77,14 @@ public class ManagerContoller {
 				if (userRole.equals("Manager"))
 				{
 					Timestamp today = new Timestamp(System.currentTimeMillis());
-					reimbursementService.updateTicketStatus(ticketId, (int) currentUser.getErs_id(), today, 5);
+					reimbursementService.updateTicketStatus(ticketId, (int) currentUser.getErs_id(), today, 2);
 				}
 			}
 		}
 		return result;
 	}
 	
-	@PostMapping("/disapproveTicket")
+	@PostMapping("/disapproveticket")
 	@ResponseBody
 	public String disapproveTicket(@RequestParam("ticketId") int ticketId,HttpServletRequest httpServletRequest)
 	{
@@ -117,7 +117,7 @@ public class ManagerContoller {
 				if (userRole.equals("Manager"))
 				{
 					Timestamp today = new Timestamp(System.currentTimeMillis());
-					reimbursementService.updateTicketStatus(ticketId, (int) currentUser.getErs_id(), today, 7);
+					reimbursementService.updateTicketStatus(ticketId, (int) currentUser.getErs_id(), today, 3);
 				}
 			}
 		}
@@ -160,14 +160,14 @@ public class ManagerContoller {
 					for (int ticketIndex = 0; ticketIndex < reimbursementTickets.size(); ticketIndex++)
 					{
 						ers_reimbursement ticket = reimbursementTickets.get(ticketIndex);
-						ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_type_id());
+						ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_id());
 						ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
 			
 						if (ticketStatus.getReimb_status().equals("unapproved"))
 						{
 							HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
 				
-							ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
+							ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_type_id());
 							ers_reimbursment_type type = typeArray.get(0);
 						
 							ArrayList<ers_user> userInfo =  userService.findByUserId((long)ticket.getReimb_author());
@@ -231,14 +231,14 @@ public class ManagerContoller {
 						String resolverName = "";
 						String timeResolved = "";
 						ers_reimbursement ticket = reimbursementTickets.get(ticketIndex);
-						ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_type_id());
+						ArrayList<ers_reimbursement_status> ticketStatusArray =  reimbursementStatusService.getAllStatusById(ticket.getReimb_status_id());
 						ers_reimbursement_status ticketStatus = ticketStatusArray.get(0);
 			
 						//ticketStatus.getReimb_status().equals("unapproved"))
 						
 							HashMap<String, String> reimbruseTicket = new HashMap<String, String>();
 				
-							ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_id());
+							ArrayList<ers_reimbursment_type> typeArray =	reimbursementTypeService.FindAllReimbursmentType(ticket.getReimb_status_type_id());
 							ers_reimbursment_type type = typeArray.get(0);
 						
 							ArrayList<ers_user> userInfo =  userService.findByUserId((long)ticket.getReimb_author());
